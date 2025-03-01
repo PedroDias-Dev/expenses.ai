@@ -19,6 +19,7 @@ import {
 import Graphs from "./graphs";
 import { monthsInPortuguese } from "@/helpers/dates";
 import UberAnalysis from "./uber-analysis";
+import { Skeleton } from "@/components/ui/skeleton";
 
 // Define types for our data
 interface Transaction {
@@ -72,6 +73,7 @@ const TransactionDashboard = ({
   // State for period selection
   const [selectedPeriods, setSelectedPeriods] = useState<string[]>([]);
   const [availablePeriods, setAvailablePeriods] = useState<string[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   // Parse and organize transaction data by period
   useEffect(() => {
@@ -171,11 +173,19 @@ const TransactionDashboard = ({
 
   // Handle period selection
   const togglePeriod = (period: string) => {
-    setSelectedPeriods((prev) =>
-      prev.includes(period)
-        ? prev.filter((p) => p !== period)
-        : [...prev, period]
-    );
+    setIsLoading(true);
+
+    // Update the selected periods
+    const newSelectedPeriods = selectedPeriods.includes(period)
+      ? selectedPeriods.filter((p) => p !== period)
+      : [...selectedPeriods, period];
+
+    setSelectedPeriods(newSelectedPeriods);
+
+    // Simulate loading delay
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 3000);
   };
 
   // Get all transactions from selected periods
@@ -196,7 +206,9 @@ const TransactionDashboard = ({
 
   return (
     <div className="p-4 transition-all">
-      <h1 className="text-2xl font-bold mb-6 text-amber-600">expenses.ai</h1>
+      <h1 className="text-3xl font-extrabold mb-6 text-[#5c55df] underline">
+        expenses.ai
+      </h1>
 
       {/* Period selector */}
       <div className="mb-6">
@@ -222,9 +234,10 @@ const TransactionDashboard = ({
                     onClick={() => togglePeriod(period)}
                     className={`px-3 py-1 rounded transition-all ${
                       selectedPeriods.includes(period)
-                        ? "bg-blue-500 text-white"
+                        ? "bg-[#5c55df] text-white"
                         : "bg-gray-200 text-zinc-700"
                     }`}
+                    disabled={isLoading}
                   >
                     {monthsInPortuguese[Number(month)]}
                   </button>
@@ -234,144 +247,194 @@ const TransactionDashboard = ({
           ))}
       </div>
 
-      {/* Summary cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-        {summaries.map((summary) => (
-          <div key={summary.period} className="bg-zinc-700  p-4 rounded shadow">
-            <h3 className="font-bold text-lg text-white">
-              {summary.formattedPeriod}
-            </h3>
-            <p className="text-2xl font-bold text-blue-600">
-              R$ {summary.total.toFixed(2)}
-            </p>
-            <p className="text-sm text-zinc-300">
-              {summary.count} transactions
-              <br />
-              Avg: R${summary.avgTransaction.toFixed(2)}
-            </p>
+      {isLoading ? (
+        <div className="container">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+            {Array(4)
+              .fill(0)
+              .map((_, i) => (
+                <div key={i} className="bg-zinc-700 p-4 rounded shadow">
+                  <Skeleton className="h-6 w-32 mb-2" />
+                  <Skeleton className="h-8 w-40 mb-2" />
+                  <Skeleton className="h-4 w-24" />
+                  <Skeleton className="h-4 w-28 mt-1" />
+                </div>
+              ))}
           </div>
-        ))}
-      </div>
 
-      {/* Charts section */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-        {/* Total spending by period (Bar chart) */}
-        <div className="bg-zinc-700  p-4 rounded shadow">
+          {/* Skeleton for charts */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+            <div className="bg-zinc-700 p-4 rounded shadow">
+              <Skeleton className="h-6 w-48 mb-4" />
+              <Skeleton className="h-[300px] w-full" />
+            </div>
+            <div className="bg-zinc-700 p-4 rounded shadow">
+              <Skeleton className="h-6 w-48 mb-4" />
+              <Skeleton className="h-[300px] w-full" />
+            </div>
+          </div>
+
+          <div className="bg-zinc-700 p-4 rounded shadow mb-8">
+            <Skeleton className="h-6 w-64 mb-4" />
+            <Skeleton className="h-[400px] w-full" />
+          </div>
+
+          <div className="bg-zinc-700 p-4 rounded shadow mb-10">
+            <Skeleton className="h-6 w-48 mb-4" />
+            <Skeleton className="h-[500px] w-full" />
+          </div>
+        </div>
+      ) : null}
+
+      <div className={`${isLoading ? "opacity-0" : null}`}>
+        {/* Summary cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+          {summaries.map((summary) => (
+            <div
+              key={summary.period}
+              className="bg-zinc-700  p-4 rounded shadow"
+            >
+              <h3 className="font-bold text-lg text-white">
+                {summary.formattedPeriod}
+              </h3>
+              <p className="text-2xl font-bold text-[#5c55df]">
+                R$ {summary.total.toFixed(2)}
+              </p>
+              <p className="text-sm text-zinc-300">
+                {summary.count} transactions
+                <br />
+                Avg: R${summary.avgTransaction.toFixed(2)}
+              </p>
+            </div>
+          ))}
+        </div>
+
+        {/* Charts section */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+          {/* Total spending by period (Bar chart) */}
+          <div className="bg-zinc-700  p-4 rounded shadow">
+            <h2 className="text-lg font-semibold mb-4 text-white">
+              Total Spending by Period
+            </h2>
+            <ResponsiveContainer width="100%" height={300}>
+              <BarChart data={barChartData}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="period" />
+                <YAxis />
+                <Tooltip
+                  formatter={(value: number) => [
+                    `$${value.toFixed(2)}`,
+                    "Total",
+                  ]}
+                />
+                <Legend />
+                <Bar dataKey="total" fill="#8884d8" name="Total Spent" />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+
+          {/* Average transaction by period (Line chart) */}
+          <div className="bg-zinc-700  p-4 rounded shadow">
+            <h2 className="text-lg font-semibold mb-4 text-white">
+              Average Transaction Value
+            </h2>
+            <ResponsiveContainer width="100%" height={300}>
+              <LineChart data={lineChartData}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="period" />
+                <YAxis />
+                <Tooltip
+                  formatter={(value: number) => [
+                    `$${value.toFixed(2)}`,
+                    "Average",
+                  ]}
+                />
+                <Legend />
+                <Line
+                  type="monotone"
+                  dataKey="avgTransaction"
+                  stroke="#82ca9d"
+                  name="Avg Transaction"
+                  activeDot={{ r: 8 }}
+                />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
+
+        {/* Category comparison (Bar chart) */}
+        <div className="bg-zinc-700  p-4 rounded shadow mb-8">
           <h2 className="text-lg font-semibold mb-4 text-white">
-            Total Spending by Period
+            Category Comparison Across Periods
           </h2>
-          <ResponsiveContainer width="100%" height={300}>
-            <BarChart data={barChartData}>
+          <ResponsiveContainer width="100%" height={400}>
+            <BarChart data={categoryComparisonData}>
               <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="period" />
+              <XAxis dataKey="category" />
               <YAxis />
               <Tooltip
-                formatter={(value: number) => [`$${value.toFixed(2)}`, "Total"]}
+                formatter={(value: number) => [`$${value.toFixed(2)}`, "Spent"]}
               />
               <Legend />
-              <Bar dataKey="total" fill="#8884d8" name="Total Spent" />
+              {selectedPeriods.map((period, index) => (
+                <Bar
+                  key={period}
+                  dataKey={period}
+                  fill={COLORS[index % COLORS.length]}
+                  name={period}
+                />
+              ))}
             </BarChart>
           </ResponsiveContainer>
         </div>
 
-        {/* Average transaction by period (Line chart) */}
-        <div className="bg-zinc-700  p-4 rounded shadow">
+        {/* Category breakdown for most recent period (Pie chart) */}
+        <div className="bg-zinc-700  p-4 rounded shadow mb-10">
           <h2 className="text-lg font-semibold mb-4 text-white">
-            Average Transaction Value
+            {summaries.length > 0
+              ? `Category Breakdown (${summaries[summaries.length - 1].period})`
+              : "Category Breakdown"}
           </h2>
-          <ResponsiveContainer width="100%" height={300}>
-            <LineChart data={lineChartData}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="period" />
-              <YAxis />
+          <ResponsiveContainer width="100%" height={500}>
+            <PieChart>
+              <Pie
+                data={pieChartData}
+                cx="50%"
+                cy="50%"
+                labelLine={true}
+                label={({ name, percent }: { name: string; percent: number }) =>
+                  `${name} (${(percent * 100).toFixed(0)}%)`
+                }
+                outerRadius={150}
+                fill="#8884d8"
+                dataKey="value"
+              >
+                {pieChartData.map((entry, index) => (
+                  <Cell
+                    key={`cell-${index}`}
+                    fill={COLORS[index % COLORS.length]}
+                  />
+                ))}
+              </Pie>
               <Tooltip
                 formatter={(value: number) => [
-                  `$${value.toFixed(2)}`,
-                  "Average",
+                  `R$${value.toFixed(2)}`,
+                  "Spent",
                 ]}
               />
               <Legend />
-              <Line
-                type="monotone"
-                dataKey="avgTransaction"
-                stroke="#82ca9d"
-                name="Avg Transaction"
-                activeDot={{ r: 8 }}
-              />
-            </LineChart>
+            </PieChart>
           </ResponsiveContainer>
         </div>
+
+        {getSelectedTransactions.length && (
+          <Graphs transactions={getSelectedTransactions} />
+        )}
+
+        {getSelectedTransactions.length > 0 && (
+          <UberAnalysis transactions={getSelectedTransactions} />
+        )}
       </div>
-
-      {/* Category comparison (Bar chart) */}
-      <div className="bg-zinc-700  p-4 rounded shadow mb-8">
-        <h2 className="text-lg font-semibold mb-4 text-white">
-          Category Comparison Across Periods
-        </h2>
-        <ResponsiveContainer width="100%" height={400}>
-          <BarChart data={categoryComparisonData}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="category" />
-            <YAxis />
-            <Tooltip
-              formatter={(value: number) => [`$${value.toFixed(2)}`, "Spent"]}
-            />
-            <Legend />
-            {selectedPeriods.map((period, index) => (
-              <Bar
-                key={period}
-                dataKey={period}
-                fill={COLORS[index % COLORS.length]}
-                name={period}
-              />
-            ))}
-          </BarChart>
-        </ResponsiveContainer>
-      </div>
-
-      {/* Category breakdown for most recent period (Pie chart) */}
-      <div className="bg-zinc-700  p-4 rounded shadow mb-10">
-        <h2 className="text-lg font-semibold mb-4 text-white">
-          {summaries.length > 0
-            ? `Category Breakdown (${summaries[summaries.length - 1].period})`
-            : "Category Breakdown"}
-        </h2>
-        <ResponsiveContainer width="100%" height={500}>
-          <PieChart>
-            <Pie
-              data={pieChartData}
-              cx="50%"
-              cy="50%"
-              labelLine={true}
-              label={({ name, percent }: { name: string; percent: number }) =>
-                `${name} (${(percent * 100).toFixed(0)}%)`
-              }
-              outerRadius={150}
-              fill="#8884d8"
-              dataKey="value"
-            >
-              {pieChartData.map((entry, index) => (
-                <Cell
-                  key={`cell-${index}`}
-                  fill={COLORS[index % COLORS.length]}
-                />
-              ))}
-            </Pie>
-            <Tooltip
-              formatter={(value: number) => [`R$${value.toFixed(2)}`, "Spent"]}
-            />
-            <Legend />
-          </PieChart>
-        </ResponsiveContainer>
-      </div>
-
-      {getSelectedTransactions.length && (
-        <Graphs transactions={getSelectedTransactions} />
-      )}
-
-      {getSelectedTransactions.length > 0 && (
-        <UberAnalysis transactions={getSelectedTransactions} />
-      )}
     </div>
   );
 };

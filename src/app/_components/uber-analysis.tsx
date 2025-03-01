@@ -149,7 +149,7 @@ const UberAnalysis = ({ transactions }: UberAnalysisProps) => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
           <div className="bg-zinc-700 p-4 rounded shadow">
             <h3 className="font-semibold">Total Uber Spending</h3>
-            <p className="text-2xl font-bold text-blue-600">
+            <p className="text-2xl font-bold text-[#5c55df]">
               R$ {uberStats.totalSpent.toFixed(2)}
             </p>
             <p className="text-sm text-zinc-200">
@@ -158,14 +158,14 @@ const UberAnalysis = ({ transactions }: UberAnalysisProps) => {
           </div>
           <div className="bg-zinc-700 p-4 rounded shadow">
             <h3 className="font-semibold">Average Trip Cost</h3>
-            <p className="text-2xl font-bold text-blue-600">
+            <p className="text-2xl font-bold text-[#5c55df]">
               R$ {uberStats.avgTripCost.toFixed(2)}
             </p>
             <p className="text-sm text-gray-600">per ride</p>
           </div>
           <div className="bg-zinc-700 p-4 rounded shadow">
             <h3 className="font-semibold">Most Common Time</h3>
-            <p className="text-2xl font-bold text-blue-600">
+            <p className="text-2xl font-bold text-[#5c55df]">
               {
                 Object.entries(uberStats.timeOfDay).sort(
                   (a, b) => b[1] - a[1]
