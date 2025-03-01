@@ -15,7 +15,7 @@ const ExpenseAnalysisDashboard = async () => {
   }, Promise.resolve({}));
 
   return (
-    <div className="p-4 max-w-6xl mx-auto text-black">
+    <div className="w-full h-full bg-zinc-900 relative px-10">
       <TransactionDashboard transactions={transactions} />
     </div>
   );

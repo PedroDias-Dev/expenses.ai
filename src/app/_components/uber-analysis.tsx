@@ -133,7 +133,7 @@ const UberAnalysis = ({ transactions }: UberAnalysisProps) => {
 
   if (uberTransactions.length === 0) {
     return (
-      <div className="bg-zinc-200 p-4 rounded shadow mb-8">
+      <div className="bg-zinc-700 p-4 rounded shadow mb-8">
         <h2 className="text-lg font-semibold mb-4">Uber Analysis</h2>
         <p>No Uber transactions found in the selected period.</p>
       </div>
@@ -141,29 +141,29 @@ const UberAnalysis = ({ transactions }: UberAnalysisProps) => {
   }
 
   return (
-    <div className="mt-10 mb-8">
+    <div className="mt-10 mb-8 text-white">
       <h1 className="text-xl font-bold mb-6 text-white">Uber Trip Analysis</h1>
 
       {/* Stats overview */}
       {uberStats && (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-          <div className="bg-zinc-200 p-4 rounded shadow">
+          <div className="bg-zinc-700 p-4 rounded shadow">
             <h3 className="font-semibold">Total Uber Spending</h3>
             <p className="text-2xl font-bold text-blue-600">
               R$ {uberStats.totalSpent.toFixed(2)}
             </p>
-            <p className="text-sm text-gray-600">
+            <p className="text-sm text-zinc-200">
               {uberStats.tripCount} total trips
             </p>
           </div>
-          <div className="bg-zinc-200 p-4 rounded shadow">
+          <div className="bg-zinc-700 p-4 rounded shadow">
             <h3 className="font-semibold">Average Trip Cost</h3>
             <p className="text-2xl font-bold text-blue-600">
               R$ {uberStats.avgTripCost.toFixed(2)}
             </p>
             <p className="text-sm text-gray-600">per ride</p>
           </div>
-          <div className="bg-zinc-200 p-4 rounded shadow">
+          <div className="bg-zinc-700 p-4 rounded shadow">
             <h3 className="font-semibold">Most Common Time</h3>
             <p className="text-2xl font-bold text-blue-600">
               {
@@ -178,7 +178,7 @@ const UberAnalysis = ({ transactions }: UberAnalysisProps) => {
       )}
 
       {/* Monthly Uber expenses chart */}
-      <div className="bg-zinc-200 p-4 rounded shadow mb-8">
+      <div className="bg-zinc-700 p-4 rounded shadow mb-8">
         <h2 className="text-lg font-semibold mb-4">Uber Expenses by Month</h2>
         <ResponsiveContainer width="100%" height={300}>
           <BarChart data={uberByMonth}>
@@ -199,7 +199,7 @@ const UberAnalysis = ({ transactions }: UberAnalysisProps) => {
       </div>
 
       {/* Average trip cost trend */}
-      <div className="bg-zinc-200 p-4 rounded shadow mb-8">
+      <div className="bg-zinc-700 p-4 rounded shadow mb-8">
         <h2 className="text-lg font-semibold mb-4">
           Average Uber Trip Cost Trend
         </h2>
@@ -237,7 +237,7 @@ const UberAnalysis = ({ transactions }: UberAnalysisProps) => {
       </div>
 
       {/* Weekday vs Weekend comparison */}
-      <div className="bg-zinc-200 p-4 rounded shadow mb-8">
+      <div className="bg-zinc-700 p-4 rounded shadow mb-8">
         <h2 className="text-lg font-semibold mb-4">
           Weekday vs Weekend Uber Usage
         </h2>

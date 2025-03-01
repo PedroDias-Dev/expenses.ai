@@ -125,9 +125,9 @@ const Graphs = ({ transactions }: { transactions: any }) => {
 
   return (
     <>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-        <div className="bg-zinc-200  p-4 rounded-lg shadow">
-          <h2 className="text-lg font-semibold mb-2">Summary</h2>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6 text-white">
+        <div className="bg-zinc-700  p-4 rounded-lg shadow">
+          <h2 className="text-lg font-semibold mb-2 text-white">Summary</h2>
           <div className="space-y-2">
             <p>
               <span className="font-medium">Total Spent:</span>{" "}
@@ -165,7 +165,7 @@ const Graphs = ({ transactions }: { transactions: any }) => {
           </div>
         </div>
 
-        <div className="bg-zinc-200  p-4 rounded-lg shadow">
+        <div className="bg-zinc-700  p-4 rounded-lg shadow text-white">
           <h2 className="text-lg font-semibold mb-2">Monthly Subscriptions</h2>
           <div className="h-64">
             <ResponsiveContainer width="100%" height="100%">
@@ -186,8 +186,8 @@ const Graphs = ({ transactions }: { transactions: any }) => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-rows-2 gap-6 mb-6">
-        <div className="bg-zinc-200  p-4 rounded-lg shadow">
+      <div className="grid grid-cols-1 md:grid-rows-2 gap-6 mb-6 text-white">
+        <div className="bg-zinc-700  p-4 rounded-lg shadow">
           <h2 className="text-lg font-semibold mb-2">Spending by Category</h2>
           <div className="h-full">
             <ResponsiveContainer width="100%" height={500}>
@@ -222,7 +222,7 @@ const Graphs = ({ transactions }: { transactions: any }) => {
           </div>
         </div>
 
-        <div className="bg-zinc-200  p-4 rounded-lg shadow">
+        <div className="bg-zinc-700  p-4 rounded-lg shadow text-white">
           <h2 className="text-lg font-semibold mb-2">
             Transportation Breakdown
           </h2>
@@ -260,7 +260,7 @@ const Graphs = ({ transactions }: { transactions: any }) => {
         </div>
       </div>
 
-      <div className="bg-zinc-200  p-4 rounded-lg shadow">
+      <div className="bg-zinc-700  p-4 rounded-lg shadow text-white">
         <h2 className="text-lg font-semibold mb-2">Top 10 Expenses</h2>
         <div className="h-full">
           <ResponsiveContainer width="100%" height={500}>

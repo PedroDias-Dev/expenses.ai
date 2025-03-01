@@ -223,7 +223,7 @@ const TransactionDashboard = ({
                     className={`px-3 py-1 rounded transition-all ${
                       selectedPeriods.includes(period)
                         ? "bg-blue-500 text-white"
-                        : "bg-gray-200 text-gray-700"
+                        : "bg-gray-200 text-zinc-700"
                     }`}
                   >
                     {monthsInPortuguese[Number(month)]}
@@ -237,12 +237,14 @@ const TransactionDashboard = ({
       {/* Summary cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
         {summaries.map((summary) => (
-          <div key={summary.period} className="bg-zinc-200  p-4 rounded shadow">
-            <h3 className="font-bold text-lg">{summary.formattedPeriod}</h3>
+          <div key={summary.period} className="bg-zinc-700  p-4 rounded shadow">
+            <h3 className="font-bold text-lg text-white">
+              {summary.formattedPeriod}
+            </h3>
             <p className="text-2xl font-bold text-blue-600">
               R$ {summary.total.toFixed(2)}
             </p>
-            <p className="text-sm text-gray-600">
+            <p className="text-sm text-zinc-300">
               {summary.count} transactions
               <br />
               Avg: R${summary.avgTransaction.toFixed(2)}
@@ -254,8 +256,8 @@ const TransactionDashboard = ({
       {/* Charts section */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
         {/* Total spending by period (Bar chart) */}
-        <div className="bg-zinc-200  p-4 rounded shadow">
-          <h2 className="text-lg font-semibold mb-4">
+        <div className="bg-zinc-700  p-4 rounded shadow">
+          <h2 className="text-lg font-semibold mb-4 text-white">
             Total Spending by Period
           </h2>
           <ResponsiveContainer width="100%" height={300}>
@@ -273,8 +275,8 @@ const TransactionDashboard = ({
         </div>
 
         {/* Average transaction by period (Line chart) */}
-        <div className="bg-zinc-200  p-4 rounded shadow">
-          <h2 className="text-lg font-semibold mb-4">
+        <div className="bg-zinc-700  p-4 rounded shadow">
+          <h2 className="text-lg font-semibold mb-4 text-white">
             Average Transaction Value
           </h2>
           <ResponsiveContainer width="100%" height={300}>
@@ -302,8 +304,8 @@ const TransactionDashboard = ({
       </div>
 
       {/* Category comparison (Bar chart) */}
-      <div className="bg-zinc-200  p-4 rounded shadow mb-8">
-        <h2 className="text-lg font-semibold mb-4">
+      <div className="bg-zinc-700  p-4 rounded shadow mb-8">
+        <h2 className="text-lg font-semibold mb-4 text-white">
           Category Comparison Across Periods
         </h2>
         <ResponsiveContainer width="100%" height={400}>
@@ -328,8 +330,8 @@ const TransactionDashboard = ({
       </div>
 
       {/* Category breakdown for most recent period (Pie chart) */}
-      <div className="bg-zinc-200  p-4 rounded shadow mb-10">
-        <h2 className="text-lg font-semibold mb-4">
+      <div className="bg-zinc-700  p-4 rounded shadow mb-10">
+        <h2 className="text-lg font-semibold mb-4 text-white">
           {summaries.length > 0
             ? `Category Breakdown (${summaries[summaries.length - 1].period})`
             : "Category Breakdown"}

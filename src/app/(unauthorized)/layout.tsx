@@ -36,5 +36,9 @@ export default function UnauthorizedLayout({
   }
 
   // User is not authenticated, render public content
-  return <>{children}</>;
+  return (
+    <div className="w-screen h-screen bg-zinc-900 relative overflow-hidden">
+      {children}
+    </div>
+  );
 }
