@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Inconsolata } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "@/contexts/AuthContext";
+import { LoadingProvider } from "@/contexts/LoadingContext";
+import { Toaster } from "@/components/ui/sonner";
 
 const inconsolata = Inconsolata({
   variable: "--font-geist-sans",
@@ -21,7 +23,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inconsolata.className} bg-white`}>
-        <AuthProvider>{children}</AuthProvider>
+        <LoadingProvider>
+          <AuthProvider>{children}</AuthProvider>
+        </LoadingProvider>
+
+        <Toaster />
       </body>
     </html>
   );
