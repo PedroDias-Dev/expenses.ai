@@ -131,6 +131,14 @@ const UberAnalysis = ({ transactions }: UberAnalysisProps) => {
     };
   }, [uberTransactions]);
 
+  const getMostCommonTime = () => {
+    if (!uberStats) return;
+
+    return Object.entries(uberStats.timeOfDay).sort(
+      (a, b) => b[1] - a[1]
+    )[0][0];
+  };
+
   if (uberTransactions.length === 0) {
     return (
       <div className="bg-zinc-700 p-4 rounded shadow mb-8">
@@ -141,44 +149,64 @@ const UberAnalysis = ({ transactions }: UberAnalysisProps) => {
   }
 
   return (
-    <div className="mt-10 mb-8 text-white">
+    <div className="mb-8 text-white">
       <h1 className="text-xl font-bold mb-6 text-white">Uber Trip Analysis</h1>
 
       {/* Stats overview */}
       {uberStats && (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-          <div className="bg-zinc-700 p-4 rounded shadow">
-            <h3 className="font-semibold">Total Uber Spending</h3>
-            <p className="text-2xl font-bold text-primary">
-              R$ {uberStats.totalSpent.toFixed(2)}
-            </p>
-            <p className="text-sm text-zinc-200">
-              {uberStats.tripCount} total trips
-            </p>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+          <div className="bg-gradient-to-br from-zinc-800/80 to-zinc-900 p-7 rounded-2xl shadow-xl border border-zinc-700/50 backdrop-blur-sm hover:border-zinc-600 transition-all duration-300 group">
+            <div className="flex flex-col space-y-3">
+              <h3 className="font-semibold text-zinc-300 group-hover:text-white transition-colors">
+                Total Uber Spending
+              </h3>
+              <p className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-cyan-400">
+                R$ {uberStats.totalSpent.toFixed(2)}
+              </p>
+              <div className="flex items-center mt-2">
+                <span className="px-2 py-1 bg-zinc-700/50 rounded-full text-xs font-medium text-zinc-200">
+                  {uberStats.tripCount} total trips
+                </span>
+              </div>
+            </div>
           </div>
-          <div className="bg-zinc-700 p-4 rounded shadow">
-            <h3 className="font-semibold">Average Trip Cost</h3>
-            <p className="text-2xl font-bold text-primary">
-              R$ {uberStats.avgTripCost.toFixed(2)}
-            </p>
-            <p className="text-sm text-gray-600">per ride</p>
+
+          <div className="bg-gradient-to-br from-zinc-800/80 to-zinc-900 p-7 rounded-2xl shadow-xl border border-zinc-700/50 backdrop-blur-sm hover:border-zinc-600 transition-all duration-300 group">
+            <div className="flex flex-col space-y-3">
+              <h3 className="font-semibold text-zinc-300 group-hover:text-white transition-colors">
+                Average Trip Cost
+              </h3>
+              <p className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-cyan-400">
+                R$ {uberStats.avgTripCost.toFixed(2)}
+              </p>
+              <div className="flex items-center mt-2">
+                <span className="px-2 py-1 bg-zinc-700/50 rounded-full text-xs font-medium text-zinc-200">
+                  per ride
+                </span>
+              </div>
+            </div>
           </div>
-          <div className="bg-zinc-700 p-4 rounded shadow">
-            <h3 className="font-semibold">Most Common Time</h3>
-            <p className="text-2xl font-bold text-primary">
-              {
-                Object.entries(uberStats.timeOfDay).sort(
-                  (a, b) => b[1] - a[1]
-                )[0][0]
-              }
-            </p>
-            <p className="text-sm text-gray-600">for Uber rides</p>
+
+          <div className="bg-gradient-to-br from-zinc-800/80 to-zinc-900 p-7 rounded-2xl shadow-xl border border-zinc-700/50 backdrop-blur-sm hover:border-zinc-600 transition-all duration-300 group">
+            <div className="flex flex-col space-y-3">
+              <h3 className="font-semibold text-zinc-300 group-hover:text-white transition-colors">
+                Most Common Time
+              </h3>
+              <p className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-cyan-400">
+                {getMostCommonTime()}
+              </p>
+              <div className="flex items-center mt-2">
+                <span className="px-2 py-1 bg-zinc-700/50 rounded-full text-xs font-medium text-zinc-200">
+                  for Uber rides
+                </span>
+              </div>
+            </div>
           </div>
         </div>
       )}
 
       {/* Monthly Uber expenses chart */}
-      <div className="bg-zinc-700 p-4 rounded shadow mb-8">
+      <div className="bg-gradient-to-br from-zinc-800 to-zinc-900 p-6 rounded-xl shadow-lg border border-zinc-700 mb-8">
         <h2 className="text-lg font-semibold mb-4">Uber Expenses by Month</h2>
         <ResponsiveContainer width="100%" height={300}>
           <BarChart data={uberByMonth}>
@@ -199,7 +227,7 @@ const UberAnalysis = ({ transactions }: UberAnalysisProps) => {
       </div>
 
       {/* Average trip cost trend */}
-      <div className="bg-zinc-700 p-4 rounded shadow mb-8">
+      <div className="bg-gradient-to-br from-zinc-800 to-zinc-900 p-6 rounded-xl shadow-lg border border-zinc-700 mb-8">
         <h2 className="text-lg font-semibold mb-4">
           Average Uber Trip Cost Trend
         </h2>
@@ -237,7 +265,7 @@ const UberAnalysis = ({ transactions }: UberAnalysisProps) => {
       </div>
 
       {/* Weekday vs Weekend comparison */}
-      <div className="bg-zinc-700 p-4 rounded shadow mb-8">
+      <div className="bg-gradient-to-br from-zinc-800 to-zinc-900 p-6 rounded-xl shadow-lg border border-zinc-700 mb-8">
         <h2 className="text-lg font-semibold mb-4">
           Weekday vs Weekend Uber Usage
         </h2>

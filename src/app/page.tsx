@@ -92,7 +92,7 @@ export default function Home() {
       {/* Footer */}
       <footer className="w-full bg-zinc-800 py-8 px-4">
         <div className="container mx-auto text-center text-zinc-400">
-          <p>© 2023 expenses.ai - AI-powered expense management</p>
+          <p>© 2025 expenses.ai - AI-powered expense management</p>
         </div>
       </footer>
     </main>
