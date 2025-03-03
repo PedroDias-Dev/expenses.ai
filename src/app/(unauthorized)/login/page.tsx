@@ -115,7 +115,7 @@ export default function Login() {
                               <FormControl>
                                 <Input
                                   placeholder="email@example.com"
-                                  className="bg-zinc-900 border-zinc-700 focus:border-[#5c55df] text-white"
+                                  className="bg-zinc-900 border-zinc-700 focus:border-primary text-white"
                                   {...field}
                                 />
                               </FormControl>
@@ -139,7 +139,7 @@ export default function Login() {
                               <FormControl>
                                 <PasswordInput
                                   placeholder="*******"
-                                  className="bg-zinc-900 border-zinc-700 focus:border-[#5c55df] text-white"
+                                  className="bg-zinc-900 border-zinc-700 focus:border-primary text-white"
                                   {...field}
                                 />
                               </FormControl>
@@ -160,7 +160,7 @@ export default function Login() {
                       components={{
                         email: (
                           <span
-                            className="text-[#5c55df] text-sm flex items-center gap-2 hover:underline cursor-pointer"
+                            className="text-primary text-sm flex items-center gap-2 hover:underline cursor-pointer"
                             onClick={() =>
                               router.push("/unauthorized/register")
                             }
@@ -170,7 +170,7 @@ export default function Login() {
                         ),
                         password: (
                           <span
-                            className="text-[#5c55df] text-sm flex items-center gap-2 hover:underline cursor-pointer"
+                            className="text-primary text-sm flex items-center gap-2 hover:underline cursor-pointer"
                             onClick={() => setView("email")}
                           >
                             <ChevronLeft size={16} /> Go back
@@ -186,7 +186,7 @@ export default function Login() {
                         email: (
                           <Button
                             type="button"
-                            className="bg-[#5c55df] hover:bg-[#4a43de] text-white"
+                            className="bg-primary hover:bg-primary-200 text-white"
                             onClick={() => setView("password")}
                           >
                             Next <ChevronRight className="ml-2" size={16} />
@@ -195,7 +195,7 @@ export default function Login() {
                         password: (
                           <Button
                             type="submit"
-                            className="bg-[#5c55df] hover:bg-[#4a43de] text-white"
+                            className="bg-primary hover:bg-primary-200 text-white"
                           >
                             Login <LogIn className="ml-2" size={16} />
                           </Button>

@@ -104,9 +104,7 @@ const FileUploadModal = ({
             <div className="text-gray-300">
               <p>Drag and drop your CSV files here</p>
               <p className="mt-2">or</p>
-              <Button className="mt-2 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
-                Browse Files
-              </Button>
+              <Button className="mt-2">Browse Files</Button>
               <p className="mt-4 text-xs text-gray-400">
                 Supported format: CSV
               </p>
@@ -126,7 +124,7 @@ const FileUploadModal = ({
             disabled={!selectedFiles}
             className={`px-4 py-2 rounded ${
               selectedFiles
-                ? "bg-blue-600 text-white hover:bg-blue-700"
+                ? "bg-blue-600 text-white hover:bg-primary-300"
                 : "bg-blue-800 text-gray-300 cursor-not-allowed"
             }`}
           >

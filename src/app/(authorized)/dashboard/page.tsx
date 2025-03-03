@@ -6,8 +6,9 @@ import { collection, getDocs, addDoc } from "firebase/firestore";
 import { processTransactionsFile } from "@/helpers/transaction-converter";
 import TransactionDashboard from "@/app/_components/comparisons";
 import { auth, db } from "@/firebase/config";
-import Loading from "@/components/loading/loading";
 import FileUploadModal from "@/app/_components/file-upload";
+import { useLoading } from "@/contexts/LoadingContext";
+import { Button } from "@/components/ui/button";
 
 interface Transaction {
   date: string;
@@ -24,8 +25,9 @@ interface TransactionsByPeriod {
 const ExpenseAnalysisDashboard = () => {
   const [user, loading] = useAuthState(auth);
 
+  const { setLoading } = useLoading();
+
   const [transactions, setTransactions] = useState<TransactionsByPeriod>({});
-  const [isLoading, setIsLoading] = useState(true);
   const [showUploadModal, setShowUploadModal] = useState(false);
 
   useEffect(() => {
@@ -37,13 +39,18 @@ const ExpenseAnalysisDashboard = () => {
 
   const fetchUserTransactions = async () => {
     try {
-      setIsLoading(true);
+      setLoading({
+        loading: true,
+        showTimer: true,
+      });
       const transactionsRef = collection(db, `users/${user?.uid}/transactions`);
       const transactionsSnapshot = await getDocs(transactionsRef);
 
       if (transactionsSnapshot.empty) {
         setShowUploadModal(true);
-        setIsLoading(false);
+        setLoading({
+          loading: false,
+        });
         return;
       }
 
@@ -60,15 +67,22 @@ const ExpenseAnalysisDashboard = () => {
       });
 
       setTransactions(transactionsByPeriod);
-      setIsLoading(false);
+      setLoading({
+        loading: false,
+      });
     } catch (error) {
       console.error("Error fetching transactions:", error);
-      setIsLoading(false);
+      setLoading({
+        loading: false,
+      });
     }
   };
 
   const handleFileUpload = async (files: FileList) => {
-    setIsLoading(true);
+    setLoading({
+      loading: true,
+      showTimer: true,
+    });
     const newTransactions: TransactionsByPeriod = { ...transactions };
 
     try {
@@ -106,13 +120,13 @@ const ExpenseAnalysisDashboard = () => {
     } catch (error) {
       console.error("Error processing files:", error);
     } finally {
-      setIsLoading(false);
+      setLoading({
+        loading: false,
+      });
     }
   };
 
-  if (loading || isLoading) {
-    return <Loading />;
-  }
+  if (loading) return;
 
   return (
     <div className="w-full h-full bg-zinc-900 relative px-10">
@@ -123,12 +137,9 @@ const ExpenseAnalysisDashboard = () => {
         />
       ) : (
         <div className="w-full h-screen flex items-center justify-center">
-          <button
-            onClick={() => setShowUploadModal(true)}
-            className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-          >
+          <Button onClick={() => setShowUploadModal(true)}>
             Upload Transaction Files
-          </button>
+          </Button>
         </div>
       )}
 

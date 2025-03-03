@@ -181,15 +181,12 @@ const TransactionDashboard = ({
 
   return (
     <div className="p-4 transition-all">
-      <h1 className="text-3xl font-extrabold mb-6 text-[#5c55df] underline">
+      <h1 className="text-3xl font-extrabold mb-6 text-primary underline">
         expenses.ai
       </h1>
 
       <div className="flex justify-between items-center mb-6">
-        <Button
-          onClick={() => setShowUploadModal(true)}
-          className="bg-[#5c55df] hover:bg-[#4b46b3] text-white font-medium py-2 px-4 rounded transition-all flex items-center gap-3"
-        >
+        <Button onClick={() => setShowUploadModal(true)}>
           <Plus color="white" />
           Add New Transactions
         </Button>
@@ -217,9 +214,9 @@ const TransactionDashboard = ({
                   <Button
                     key={period}
                     onClick={() => togglePeriod(period)}
-                    className={`px-3 py-1 rounded transition-all ${
+                    className={`${
                       selectedPeriods.includes(period)
-                        ? "bg-[#5c55df] text-white"
+                        ? "bg-primary text-white"
                         : "bg-gray-200 text-zinc-700"
                     }`}
                     disabled={isLoading}
@@ -282,7 +279,7 @@ const TransactionDashboard = ({
               <h3 className="font-bold text-lg text-white">
                 {summary.formattedPeriod}
               </h3>
-              <p className="text-2xl font-bold text-[#5c55df]">
+              <p className="text-2xl font-bold text-primary">
                 R$ {summary.total.toFixed(2)}
               </p>
               <p className="text-sm text-zinc-300">
