@@ -20,41 +20,15 @@ import Graphs from "./graphs";
 import { monthsInPortuguese } from "@/helpers/dates";
 import UberAnalysis from "./uber-analysis";
 import { Skeleton } from "@/components/ui/skeleton";
-
-// Define types for our data
-interface Transaction {
-  date: string;
-  description: string;
-  category: string;
-  type: string;
-  value: number;
-}
-
-interface TransactionsByPeriod {
-  [period: string]: Transaction[];
-}
-
-interface CategorySums {
-  [category: string]: number;
-}
-
-interface PeriodSummary {
-  period: string;
-  formattedPeriod: string;
-  total: number;
-  categorySums: CategorySums;
-  count: number;
-  avgTransaction: number;
-}
-
-interface ChartDataItem {
-  [key: string]: string | number;
-}
-
-interface PieChartDataItem {
-  name: string;
-  value: number;
-}
+import { Plus } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Transaction, TransactionsByPeriod } from "@/types/transaction";
+import {
+  CategorySums,
+  ChartDataItem,
+  PeriodSummary,
+  PieChartDataItem,
+} from "@/types/chart";
 
 const COLORS = [
   "#00539c",
@@ -64,11 +38,12 @@ const COLORS = [
   "#5c55df",
   "#82ca9d",
 ];
-
 const TransactionDashboard = ({
   transactions,
+  setShowUploadModal,
 }: {
   transactions: TransactionsByPeriod;
+  setShowUploadModal: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   // State for period selection
   const [selectedPeriods, setSelectedPeriods] = useState<string[]>([]);
@@ -210,6 +185,16 @@ const TransactionDashboard = ({
         expenses.ai
       </h1>
 
+      <div className="flex justify-between items-center mb-6">
+        <Button
+          onClick={() => setShowUploadModal(true)}
+          className="bg-[#5c55df] hover:bg-[#4b46b3] text-white font-medium py-2 px-4 rounded transition-all flex items-center gap-3"
+        >
+          <Plus color="white" />
+          Add New Transactions
+        </Button>
+      </div>
+
       {/* Period selector */}
       <div className="mb-6">
         <h2 className="text-lg font-semibold mb-2 text-white">
@@ -229,7 +214,7 @@ const TransactionDashboard = ({
               <h3 className="text-md font-medium mb-2 text-zinc-200">{year}</h3>
               <div className="flex flex-wrap gap-2">
                 {months.map(({ month, period }) => (
-                  <button
+                  <Button
                     key={period}
                     onClick={() => togglePeriod(period)}
                     className={`px-3 py-1 rounded transition-all ${
@@ -240,7 +225,7 @@ const TransactionDashboard = ({
                     disabled={isLoading}
                   >
                     {monthsInPortuguese[Number(month)]}
-                  </button>
+                  </Button>
                 ))}
               </div>
             </div>

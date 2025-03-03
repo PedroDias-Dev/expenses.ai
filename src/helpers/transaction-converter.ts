@@ -1,28 +1,10 @@
-import { promises as fs } from "fs";
+import { Transaction } from "@/types/transaction";
 import Papa from "papaparse";
-import path from "path";
-
-interface Transaction {
-  date: string;
-  description: string;
-  category: string;
-  type: string;
-  value: number;
-}
 
 export async function processTransactionsFile(
-  monthAndYear: string
+  csvData: string
 ): Promise<Transaction[]> {
   try {
-    // Read the CSV file
-    const csvData = await fs.readFile(
-      path.resolve(
-        process.cwd(),
-        `./src/helpers/fatura-inter-${monthAndYear}.csv`
-      ),
-      "utf-8"
-    );
-
     // Parse CSV
     const parsedData = Papa.parse<string[]>(csvData, {
       delimiter: ",",

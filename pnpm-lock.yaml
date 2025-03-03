@@ -65,6 +65,9 @@ importers:
       react-dom:
         specifier: ^19.0.0
         version: 19.0.0(react@19.0.0)
+      react-firebase-hooks:
+        specifier: ^5.1.1
+        version: 5.1.1(firebase@11.4.0)(react@19.0.0)
       react-hook-form:
         specifier: ^7.54.2
         version: 7.54.2(react@19.0.0)
@@ -2157,6 +2160,12 @@ packages:
     resolution: {integrity: sha512-4GV5sHFG0e/0AD4X+ySy6UJd3jVl1iNsNHdpad0qhABJ11twS3TTBnseqsKurKcsNqCEFeGL3uLpVChpIO3QfQ==}
     peerDependencies:
       react: ^19.0.0
+
+  react-firebase-hooks@5.1.1:
+    resolution: {integrity: sha512-y2UpWs82xs+39q5Rc/wq316ca52QsC0n8m801V+yM4IC4hbfOL4yQPVSh7w+ydstdvjN9F+lvs1WrO2VYxpmdA==}
+    peerDependencies:
+      firebase: '>= 9.0.0'
+      react: '>= 16.8.0'
 
   react-hook-form@7.54.2:
     resolution: {integrity: sha512-eHpAUgUjWbZocoQYUHposymRb4ZP6d0uwUnooL2uOybA9/3tPUvoAKqEWK1WaSiTxxOfTpffNZP7QwlnM3/gEg==}
@@ -4810,6 +4819,11 @@ snapshots:
     dependencies:
       react: 19.0.0
       scheduler: 0.25.0
+
+  react-firebase-hooks@5.1.1(firebase@11.4.0)(react@19.0.0):
+    dependencies:
+      firebase: 11.4.0
+      react: 19.0.0
 
   react-hook-form@7.54.2(react@19.0.0):
     dependencies:
