@@ -180,7 +180,7 @@ const TransactionDashboard = ({
   }
 
   return (
-    <div className="p-4 transition-all">
+    <div className="transition-all">
       <h1 className="text-3xl font-extrabold mb-6 text-primary underline">
         expenses.ai
       </h1>

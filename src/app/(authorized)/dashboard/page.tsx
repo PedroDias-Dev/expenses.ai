@@ -129,7 +129,7 @@ const ExpenseAnalysisDashboard = () => {
   if (loading) return;
 
   return (
-    <div className="w-full h-full bg-zinc-900 relative px-10">
+    <div className="w-full h-full bg-zinc-900 relative">
       {Object.keys(transactions).length > 0 ? (
         <TransactionDashboard
           transactions={transactions}

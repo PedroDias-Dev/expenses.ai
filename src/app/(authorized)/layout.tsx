@@ -1,5 +1,6 @@
 "use client";
 
+import { Header } from "@/components/layout/header/header";
 import Loading from "@/components/loading/loading";
 import { useAuth } from "@/contexts/AuthContext";
 import { useRouter, usePathname } from "next/navigation";
@@ -34,5 +35,11 @@ export default function AuthorizedLayout({
   }
 
   // User is authenticated, render protected content
-  return <>{children}</>;
+  return (
+    <div className="w-screen h-screen flex flex-col overflow-hidden bg-zinc-900">
+      <Header />
+
+      <div className="w-full h-full overflow-auto px-10 py-4">{children}</div>
+    </div>
+  );
 }
