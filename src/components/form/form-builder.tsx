@@ -22,8 +22,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useState } from "react";
-import { Path, PathValue, FieldValues } from "react-hook-form";
-import { FormFieldConfig } from "@/interfaces/form-field-config";
+import { Path } from "react-hook-form";
+import { FormFieldConfig } from "@/types/form-field-config";
 
 interface FormBuilderProps<T extends z.ZodType> {
   fields: FormFieldConfig[];
