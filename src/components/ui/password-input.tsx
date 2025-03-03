@@ -15,8 +15,6 @@ const PasswordInput = React.forwardRef<
   const disabled =
     props.value === "" || props.value === undefined || props.disabled;
 
-  console.log(showPassword);
-
   return (
     <div className="relative">
       <Input
@@ -34,9 +32,9 @@ const PasswordInput = React.forwardRef<
         disabled={disabled}
       >
         {showPassword && !disabled ? (
-          <EyeIcon className="h-4 w-4" aria-hidden="true" />
+          <EyeIcon className="h-4 w-4" aria-hidden="true" color="white" />
         ) : (
-          <EyeOffIcon className="h-4 w-4" aria-hidden="true" />
+          <EyeOffIcon className="h-4 w-4" aria-hidden="true" color="white" />
         )}
         <span className="sr-only">
           {showPassword ? "Hide password" : "Show password"}

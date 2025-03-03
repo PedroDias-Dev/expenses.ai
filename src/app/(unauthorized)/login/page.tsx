@@ -28,6 +28,7 @@ import { auth } from "@/firebase/config";
 import { signInWithEmailAndPassword } from "firebase/auth";
 
 import { toast } from "sonner";
+import { handleAuthOperation } from "@/firebase/errors";
 
 const FormSchema = z.object({
   email: z.string().min(2, {
@@ -59,11 +60,16 @@ export default function Login() {
     });
 
     try {
-      await signInWithEmailAndPassword(auth, data.email, data.password);
+      await handleAuthOperation(async () => {
+        // Your Firebase auth code here, e.g.:
+        await signInWithEmailAndPassword(auth, data.email, data.password);
+      });
+
       router.push("/dashboard");
-    } catch (err) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (err: any) {
       toast.error("Uh oh! Something went wrong.", {
-        description: err instanceof Error ? err.message : "Failed to sign up",
+        description: err.message,
       });
     } finally {
       setLoading({ loading: false });
@@ -72,20 +78,18 @@ export default function Login() {
 
   return (
     <AnimatePresence mode="wait">
-      <div className="flex gap-1 items-center justify-center w-full h-full">
-        <div className="p-4 bg-zinc-700 shadow-sm rounded-sm max-w-[350px]">
+      <div className="flex items-center justify-center w-full h-full bg-zinc-900 min-h-screen">
+        <div className="p-8 bg-zinc-800 shadow-lg rounded-lg max-w-[400px] border border-zinc-700">
           <motion.div
             initial={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -20 }}
             transition={{ ease: "easeInOut", duration: 0.5 }}
-            className=" flex flex-col items-start gap-4"
+            className="flex flex-col items-start gap-6"
           >
-            <div className="flex flex-col gap-1">
-              <h1 className="text-3xl font-bold text-white">
-                Login to your fake company
-              </h1>
-              <h1 className="text-md text-zinc-300">
-                Dont worry about your credentials, anything really works
+            <div className="flex flex-col gap-2">
+              <h1 className="text-3xl font-bold text-white">Welcome back</h1>
+              <h1 className="text-md text-zinc-400">
+                Login to your account to continue
               </h1>
             </div>
 
@@ -105,17 +109,20 @@ export default function Login() {
                           name="email"
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel>E-mail</FormLabel>
+                              <FormLabel className="text-zinc-300">
+                                E-mail
+                              </FormLabel>
                               <FormControl>
                                 <Input
                                   placeholder="email@example.com"
+                                  className="bg-zinc-900 border-zinc-700 focus:border-[#5c55df] text-white"
                                   {...field}
                                 />
                               </FormControl>
-                              <FormDescription>
-                                {'This is your "corporate" e-mail.'}
+                              <FormDescription className="text-zinc-500">
+                                Type the e-mail you registered
                               </FormDescription>
-                              <FormMessage />
+                              <FormMessage className="text-red-400" />
                             </FormItem>
                           )}
                         />
@@ -126,17 +133,20 @@ export default function Login() {
                           name="password"
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel>Password</FormLabel>
+                              <FormLabel className="text-zinc-300">
+                                Password
+                              </FormLabel>
                               <FormControl>
                                 <PasswordInput
                                   placeholder="*******"
+                                  className="bg-zinc-900 border-zinc-700 focus:border-[#5c55df] text-white"
                                   {...field}
                                 />
                               </FormControl>
-                              <FormDescription>
-                                Type in any password, really.
+                              <FormDescription className="text-zinc-500">
+                                Your secure password
                               </FormDescription>
-                              <FormMessage />
+                              <FormMessage className="text-red-400" />
                             </FormItem>
                           )}
                         />
@@ -144,13 +154,13 @@ export default function Login() {
                     }}
                   />
 
-                  <div className="w-full justify-between items-center flex gap-2">
+                  <div className="w-full justify-between items-center flex gap-2 pt-2">
                     <SwitchTransition
                       state={view}
                       components={{
                         email: (
                           <span
-                            className="text-accent text-sm flex items-center gap-2 hover:underline cursor-pointer"
+                            className="text-[#5c55df] text-sm flex items-center gap-2 hover:underline cursor-pointer"
                             onClick={() =>
                               router.push("/unauthorized/register")
                             }
@@ -160,7 +170,7 @@ export default function Login() {
                         ),
                         password: (
                           <span
-                            className="text-accent text-sm flex items-center gap-2 hover:underline cursor-pointer"
+                            className="text-[#5c55df] text-sm flex items-center gap-2 hover:underline cursor-pointer"
                             onClick={() => setView("email")}
                           >
                             <ChevronLeft size={16} /> Go back
@@ -176,14 +186,18 @@ export default function Login() {
                         email: (
                           <Button
                             type="button"
+                            className="bg-[#5c55df] hover:bg-[#4a43de] text-white"
                             onClick={() => setView("password")}
                           >
-                            Next <ChevronRight size={16} />
+                            Next <ChevronRight className="ml-2" size={16} />
                           </Button>
                         ),
                         password: (
-                          <Button variant="secondary" type="submit">
-                            Login <LogIn size={16} />
+                          <Button
+                            type="submit"
+                            className="bg-[#5c55df] hover:bg-[#4a43de] text-white"
+                          >
+                            Login <LogIn className="ml-2" size={16} />
                           </Button>
                         ),
                       }}
