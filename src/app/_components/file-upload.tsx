@@ -125,7 +125,7 @@ const FileUploadModal = ({
             className={`px-4 py-2 rounded ${
               selectedFiles
                 ? "bg-blue-600 text-white hover:bg-primary-300"
-                : "bg-blue-800 text-gray-300 cursor-not-allowed"
+                : "bg-blue-800 txext-gray-300 cursor-not-allowed"
             }`}
           >
             Upload
